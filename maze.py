@@ -1,6 +1,7 @@
 import random
 from math import sqrt
 
+
 # a class to represent what a maze cell is. Like a cell data type to create objects from.
 # It can be an empty cell, a barrier, a start, an end (goal), or a path.
 # start is marked with an S, end (goal) is marked with an S
@@ -49,7 +50,7 @@ class Maze:
         """ Prints the maze """
         #  Add the top border
         maze_string = ""
-        maze_string += "╔" + "═" * (self.columns*2 + 1) + "╗\n"
+        maze_string += "╔" + "═" * (self.columns * 2 + 1) + "╗\n"
         # The maze is a grid of cells
         for row in self.grid:
             # Add the left border
@@ -58,7 +59,7 @@ class Maze:
                 maze_string += cell + " "
             maze_string += "║\n"
             # Add the right border
-        maze_string += "╚" + "═" * (self.columns*2 + 1) + "╝\n"
+        maze_string += "╚" + "═" * (self.columns * 2 + 1) + "╝\n"
         # Add the bottom border
         return maze_string
 
@@ -85,12 +86,15 @@ class Maze:
         return row == self.end[0] and column == self.end[1]
 
     def manhattan_distance(self, row, column):
-        return abs(row - self.end[0]) + abs(column - self.end[1])
+        """ Manhattan distance is the sum of the absolute values of the differences of the coordinates.
+         It is the first heuristic we will use to solve the maze. """
+        x = abs(row - self.end[0])
+        y = abs(column - self.end[1])
+        return abs(x + y)
 
     def euclidean_distance(self, row, column):
-        return sqrt((row - self.end[0]) ** 2 + (column - self.end[1]) ** 2)
-
-
-
+        x = abs(row - self.end[0])
+        y = abs(column - self.end[1])
+        return sqrt((x ** 2 + y ** 2))
 
 
