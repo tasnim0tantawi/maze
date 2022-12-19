@@ -1,6 +1,6 @@
 import random
 from math import sqrt
-from search import astar
+from search import astar, path_generator
 
 # a class to represent what a maze cell is. Like a cell data type to create objects from.
 # It can be an empty cell, a barrier, a start, an end (goal), or a path.
@@ -109,8 +109,14 @@ class Maze:
 
     def solve(self):
         heuristic_distance = self.manhattan_distance(self.start[0], self.start[1])
-        self.path = astar(self.start, self.is_goal, self.locations_to_move, heuristic_distance)
-        self.visit(self.path)
-        return self.path
+        solution = astar(self.start, self.is_goal, self.locations_to_move, heuristic_distance)
+        if solution is None:
+            print("No solution found")
+        else:
+            path = path_generator(solution)
+            self.visit(path)
+            print(self.print_maze())
+
+
 
 

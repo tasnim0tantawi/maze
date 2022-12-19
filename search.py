@@ -18,15 +18,6 @@ class Node:
 
         return (self.cost + self.heuristic) < (other.cost + other.heuristic)
 
-    def path_generator(self):
-        """ Generates the path from the start node to the end node """
-        path = []
-        node = self
-        while node is not None:
-            path.append(node.state)
-            node = node.parent
-        return path[::-1]
-
 
 class PriorityQueue:
     """ Priority Queue is a queue that sorts the items by priority,
@@ -53,9 +44,19 @@ class PriorityQueue:
         return len(self.queue) == 0
 
 
-def astar(self, goal_test,  # a function that takes a row and column and returns true if it is the goal
+def path_generator(self):
+    """ Generates the path from the start node to the end node """
+    path = []
+    node = self
+    while node is not None:
+        path.append(node.state)
+        node = node.parent
+    return path[::-1]
+
+
+def astar(initial, goal_test,  # a function that takes a row and column and returns true if it is the goal
           to_visit,  # a function
-          heuristic # a function, it is either manhattan_distance or euclidean_distance
+          heuristic  # a function, it is either manhattan_distance or euclidean_distance
           ):
     """  A* algorithm is an informed/heuristic search algorithm that uses a heuristic value to solve the maze.
         It is a combination of the breadth-first search algorithm and the depth-first search algorithm.
@@ -63,9 +64,9 @@ def astar(self, goal_test,  # a function that takes a row and column and returns
 
     # The priority queue is a list of tuples of (distance, row, column)
     open_list = PriorityQueue()
-    open_list.push(Node(self, 0, heuristic(self.start[0], self.start[1])))
+    open_list.push(Node(initial, 0, heuristic()))
     # The closed list is a list of tuples of (row, column)
-    closed_list = {}
+    closed_list = {initial: 0}
 
     while not open_list.empty():
         current_node = open_list.pop()
@@ -78,6 +79,5 @@ def astar(self, goal_test,  # a function that takes a row and column and returns
             # If the child is not in the closed list, then add it to the open list
             if child not in closed_list or new_cost < closed_list[child]:
                 closed_list[child] = new_cost
-                open_list.push(Node(child, current_node.cost + 1, heuristic(child[0], child[1]), current_node))
+                open_list.push(Node(child, new_cost, heuristic(), current_node))
     return None
-
