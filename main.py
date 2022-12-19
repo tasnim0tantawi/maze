@@ -1,6 +1,5 @@
 from maze import Maze
-from math import sqrt
-from colorama import Fore
+from colorama import Fore, Style
 
 print(Fore.LIGHTYELLOW_EX + "Welcome to the Maze Generator!")
 print(Fore.LIGHTBLUE_EX + "Please enter the number of rows and columns for the maze.")
@@ -21,3 +20,6 @@ end = (int(input("End Row: ")), int(input("End Column: ")))
 maze = Maze(rows, columns, barriers, start, end)
 print(Fore.LIGHTYELLOW_EX + "Here is your maze:")
 print(maze.print_maze())
+print(Fore.LIGHTBLUE_EX + "Here is the solution:")
+maze.solve()
+

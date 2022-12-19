@@ -54,24 +54,30 @@ class PriorityQueue:
 
 
 def astar(self, goal_test,  # a function that takes a row and column and returns true if it is the goal
-          visit,  # a function
-          heuristic  # a function, it is either manhattan_distance or euclidean_distance
+          to_visit,  # a function
+          heuristic # a function, it is either manhattan_distance or euclidean_distance
           ):
     """  A* algorithm is an informed/heuristic search algorithm that uses a heuristic value to solve the maze.
         It is a combination of the breadth-first search algorithm and the depth-first search algorithm.
         It uses a priority queue to keep track of the cells to visit in an open list. """
+
     # The priority queue is a list of tuples of (distance, row, column)
     open_list = PriorityQueue()
-    open_list.push(Node(self.start, 0, heuristic(self.start[0], self.start[1])))
+    open_list.push(Node(self, 0, heuristic(self.start[0], self.start[1])))
     # The closed list is a list of tuples of (row, column)
     closed_list = {}
 
     while not open_list.empty():
         current_node = open_list.pop()
-        if goal_test(current_node.state[0], current_node.state[1]):
-            return current_node.path_generator()
-        if current_node.state not in closed_list:
-            closed_list[current_node.state] = True
-            for neighbor in visit(current_node.state[0], current_node.state[1]):
-                if neighbor not in closed_list:
-                    open_list.push(Node(neighbor, current_node.cost + 1, heuristic(neighbor[0], neighbor[1]), current_node))
+        current_state = current_node.state
+        # If the current node is the goal node, then return it
+        if goal_test(current_state[0], current_state[1]):
+            return current_node
+        for child in to_visit(current_state[0], current_state[1]):
+            new_cost = current_node.cost + 1
+            # If the child is not in the closed list, then add it to the open list
+            if child not in closed_list or new_cost < closed_list[child]:
+                closed_list[child] = new_cost
+                open_list.push(Node(child, current_node.cost + 1, heuristic(child[0], child[1]), current_node))
+    return None
+
