@@ -35,5 +35,4 @@ print(Fore.LIGHTYELLOW_EX + "Here is your maze:")
 print(maze.print_maze())
 print(Fore.LIGHTBLUE_EX + "Here is the solution:" + Fore.RESET)
 maze.solve()
-print("The path is:")
 

@@ -121,3 +121,5 @@ class Maze:
             path = path_generator(solution)
             self.visit(path)
             print(self.print_maze())
+            print(f"Path length: {len(path)}")
+            print("Path: " + str(path))
