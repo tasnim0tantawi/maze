@@ -2,6 +2,7 @@ import heapq
 
 
 class Node:
+    """ To represent the node in the priority queue. """
     def __init__(self, state, cost, heuristic, parent=None):
         self.state = state
         # parent is the node that led to this node

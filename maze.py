@@ -1,7 +1,9 @@
 import random
 from math import sqrt
 from search import astar, path_generator
+from colorama import Fore
 
+CAPITAL_LETTERS = [chr(i) for i in range(65, 91)]
 # a class to represent what a maze cell is. Like a cell data type to create objects from.
 # It can be an empty cell, a barrier, a start, an end (goal), or a path.
 # start is marked with an S, end (goal) is marked with an S
@@ -10,16 +12,10 @@ from search import astar, path_generator
 
 class Cell:
     EMPTY = " "
-    BARRIER = "■"
+    BARRIER = Fore.CYAN + "■" + Fore.RESET
     START = "S"
-    END = "★"
-    PATH = "●"
-
-
-class Position:
-    def __init__(self, row, column):
-        self.row = row
-        self.column = column
+    END = Fore.LIGHTRED_EX + "★" + Fore.RESET
+    PATH = Fore.LIGHTYELLOW_EX + "●" + Fore.RESET
 
 
 class Maze:
@@ -53,19 +49,25 @@ class Maze:
         self.stack = []
 
     def print_maze(self):
-        """ Prints the maze """
+        """ Prints the maze. """
         #  Add the top border
-        maze_string = ""
-        maze_string += "╔" + "═" * (self.columns * 2 + 1) + "╗\n"
+        maze_string = "  "
+        # adding column numbers
+        for i in range(self.columns):
+            maze_string += f"{i} "
+        maze_string += "\n"
+        maze_string += Fore.CYAN + "  ╔" + "═" * (self.columns * 2 + 1) + "╗\n" + Fore.RESET
         # The maze is a grid of cells
         for row in self.grid:
+            # adding the row alphabet
+            maze_string += f"{CAPITAL_LETTERS[self.grid.index(row)]} "
             # Add the left border
-            maze_string += "║ "
+            maze_string += Fore.CYAN + "║ " + Fore.RESET
             for cell in row:
                 maze_string += cell + " "
-            maze_string += "║\n"
+            maze_string += Fore.CYAN + "║\n" + Fore.RESET
             # Add the right border
-        maze_string += "╚" + "═" * (self.columns * 2 + 1) + "╝\n"
+        maze_string += Fore.CYAN + "  ╚" + "═" * (self.columns * 2 + 1) + "╝\n" + Fore.RESET
         # Add the bottom border
         return maze_string
 
@@ -94,10 +96,12 @@ class Maze:
     def manhattan_distance(self, row, column):
         """ Manhattan distance is the sum of the absolute values of the differences of the coordinates.
          It is the first heuristic we will use to solve the maze. """
+
         def distance():
             x = abs(row - self.end[0])
             y = abs(column - self.end[1])
             return abs(x + y)
+
         return distance
 
     def euclidean_distance(self, row, column):
@@ -105,6 +109,7 @@ class Maze:
             x = abs(row - self.end[0])
             y = abs(column - self.end[1])
             return sqrt((x ** 2 + y ** 2))
+
         return distance
 
     def solve(self):
@@ -116,7 +121,3 @@ class Maze:
             path = path_generator(solution)
             self.visit(path)
             print(self.print_maze())
-
-
-
-
