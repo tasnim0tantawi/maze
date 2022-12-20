@@ -26,21 +26,19 @@ while start[0] < 0 or start[0] >= rows or start[1] < 0 or start[1] >= columns:
 print(Fore.LIGHTBLUE_EX + "Please enter the ending coordinates for the maze.")
 # end is a tuple of (row, column)
 end = (int(input("End Row: ")), int(input("End Column: ")))
-maze = Maze(rows, columns, barriers, start, end)
 while end[0] < 0 or end[0] >= rows or end[1] < 0 or end[1] >= columns:
     print(Fore.LIGHTRED_EX + "Please enter a valid ending coordinate.")
     end = (int(input("End Row: ")), int(input("End Column: ")))
 
-print(Fore.LIGHTYELLOW_EX + "Here is your maze:")
-print(maze.print_maze())
+maze = Maze(rows, columns, barriers, start, end)
+
 print(Fore.LIGHTBLUE_EX + "Here is the solution:" + Fore.RESET)
+print(Fore.LIGHTMAGENTA_EX + "Manhattan Distance Heuristic" + Fore.RESET)
 maze.solve("manhattan")
 print("Would you like to try euclidean distance heuristic? (y/n)")
 euclidean = input().lower()
 if euclidean == "y":
+    print(Fore.LIGHTMAGENTA_EX + "Euclidean Distance Heuristic" + Fore.RESET)
     maze.solve("euclidean")
 else:
-    print(Fore.LIGHTMAGENTA_EX+"Goodbye!"+Fore.RESET)
-
-
-
+    print(Fore.LIGHTMAGENTA_EX + "Goodbye!" + Fore.RESET)
