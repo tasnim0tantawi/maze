@@ -34,5 +34,13 @@ while end[0] < 0 or end[0] >= rows or end[1] < 0 or end[1] >= columns:
 print(Fore.LIGHTYELLOW_EX + "Here is your maze:")
 print(maze.print_maze())
 print(Fore.LIGHTBLUE_EX + "Here is the solution:" + Fore.RESET)
-maze.solve()
+maze.solve("manhattan")
+print("Would you like to try euclidean distance heuristic? (y/n)")
+euclidean = input().lower()
+if euclidean == "y":
+    maze.solve("euclidean")
+else:
+    print(Fore.LIGHTMAGENTA_EX+"Goodbye!"+Fore.RESET)
+
+
 

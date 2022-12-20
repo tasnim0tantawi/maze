@@ -126,10 +126,14 @@ class Maze:
 
         return distance
 
-    def solve(self):
+    def solve(self, heuristic):
         """ Solves the maze using the A* algorithm. """
         # Choose the heuristic to use
-        heuristic_distance = self.manhattan_distance(self.start[0], self.start[1])
+        if heuristic == "manhattan":
+            heuristic_distance = self.manhattan_distance(self.start[0], self.start[1])
+        else:
+            heuristic_distance = self.euclidean_distance(self.start[0], self.start[1])
+
         solution = astar(self.start, self.is_goal, self.locations_to_move, heuristic_distance)
         if solution is None:
             print("No solution found")
