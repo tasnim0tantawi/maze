@@ -6,12 +6,12 @@ print(Fore.LIGHTBLUE_EX + "Please enter the number of rows and columns for the m
 rows = int(input("Rows: "))
 columns = int(input("Columns: "))
 while rows < 5 or columns < 5:
-    print(Fore.RED + "The number of rows and columns must be at least 2.")
+    print(Fore.RED + "The number of rows and columns must be at least 5.")
     rows = int(input("Rows: "))
     columns = int(input("Columns: "))
 
 print(Fore.LIGHTBLUE_EX + "Please enter the percentage of barriers for the maze.")
-barriers = int(input("Barriers: "))
+barriers = int(input("Barriers: %"))
 while barriers > 40 or barriers < 0:
     print(Fore.LIGHTRED_EX + "Please enter a number between 0 and 40.")
     barriers = int(input("Barriers: "))
