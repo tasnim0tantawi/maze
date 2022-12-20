@@ -1,6 +1,6 @@
 import random
 from math import sqrt
-from search import astar, path_generator
+from search import astar, path_generator, format_path
 from colorama import Fore
 
 FIXED_NUMBERS = ["0 ", "1 ", "2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ", "10", "11", "12", "13", "14", "15", "16",
@@ -26,6 +26,7 @@ class Cell:
 
 class Maze:
     """ Maze characteristics and operations. """
+
     def make_maze_matrix(self):
         matrix = []
         for row in range(self.rows):
@@ -127,6 +128,7 @@ class Maze:
     def euclidean_distance(self, row, column):
         """ Euclidean distance is the square root of the sum of the squares of the differences of the coordinates.
          It is the second heuristic we will use to solve the maze. """
+
         def distance():
             x = abs(row - self.end[0])
             y = abs(column - self.end[1])
@@ -153,4 +155,5 @@ class Maze:
             self.visit(path)
             print(self.print_maze())
             print(f"Path length: {len(path)}")
-            print("Path: " + str(path))
+            print("Path: ")
+            print(format_path(path))

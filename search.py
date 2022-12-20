@@ -3,6 +3,7 @@ import heapq
 
 class Node:
     """ To represent the node in the priority queue. """
+
     def __init__(self, state, cost, heuristic, parent=None):
         self.state = state
         # parent is the node that led to this node
@@ -53,6 +54,21 @@ def path_generator(self):
         path.append(node.state)
         node = node.parent
     return path[::-1]
+
+
+def format_path(path):
+    """ Prints the path. """
+    count = 1
+    path_string = ""
+    for location in path:
+        if count != len(path):
+            path_string += f"{location}" + " -> "
+        else:
+            path_string += f"{location}"
+        if count % 5 == 0:
+            path_string += "\n"
+        count += 1
+    return path_string
 
 
 def astar(initial, goal_test,  # a function that takes a row and column and returns true if it is the goal

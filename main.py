@@ -31,6 +31,8 @@ while end[0] < 0 or end[0] >= rows or end[1] < 0 or end[1] >= columns:
     end = (int(input("End Row: ")), int(input("End Column: ")))
 
 maze = Maze(rows, columns, barriers, start, end)
+print(Fore.LIGHTYELLOW_EX + "Here is your maze:" + Fore.RESET)
+print(maze.print_maze())
 
 print(Fore.LIGHTBLUE_EX + "Here is the solution:" + Fore.RESET)
 print(Fore.LIGHTMAGENTA_EX + "Manhattan Distance Heuristic" + Fore.RESET)
