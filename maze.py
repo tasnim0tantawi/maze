@@ -46,18 +46,15 @@ class Maze:
                     self.matrix[row][column] = Cell.BARRIER
 
     def __init__(self, rows, columns, barriers, start, end):
-        self.rows: int = rows
-        self.columns: int = columns
-        self.barriers: int = barriers
-        self.start: tuple = start
-        self.end: tuple = end
+        self.rows = rows
+        self.columns = columns
+        self.barriers = barriers
+        self.start = start
+        self.end = end
         self.matrix = self.make_maze_matrix()
         self.add_barriers()
         self.matrix[self.start[0]][self.start[1]] = Cell.START
         self.matrix[self.end[0]][self.end[1]] = Cell.END
-
-        self.path = []
-        self.visited = []
 
     def print_maze(self):
         """ Prints the maze. """
@@ -85,7 +82,7 @@ class Maze:
         # Add the bottom border
         return maze_string
 
-    def locations_to_move(self, row, column):
+    def to_visit(self, row, column):
         """ Returns a list of tuples of the locations that can be moved to from the current location.
         The list is in the order of right, left, top, down. """
         locations = []
@@ -118,23 +115,23 @@ class Maze:
         """ Manhattan distance is the sum of the absolute values of the differences of the coordinates.
          It is the first heuristic we will use to solve the maze. """
 
-        def distance():
+        def formula():
             x = abs(row - self.end[0])
             y = abs(column - self.end[1])
             return abs(x + y)
 
-        return distance
+        return formula
 
     def euclidean_distance(self, row, column):
         """ Euclidean distance is the square root of the sum of the squares of the differences of the coordinates.
          It is the second heuristic we will use to solve the maze. """
 
-        def distance():
+        def formula():
             x = abs(row - self.end[0])
             y = abs(column - self.end[1])
             return sqrt((x ** 2 + y ** 2))
 
-        return distance
+        return formula
 
     def solve(self, heuristic):
         """ Solves the maze using the A* algorithm. """
@@ -144,7 +141,7 @@ class Maze:
         else:
             heuristic_distance = self.euclidean_distance(self.start[0], self.start[1])
 
-        solution = astar(self.start, self.is_goal, self.locations_to_move, heuristic_distance)
+        solution = astar(self.start, self.is_goal, self.to_visit, heuristic_distance)
         if solution is None:
             print("No solution found")
         else:

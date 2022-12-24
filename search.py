@@ -71,8 +71,9 @@ def format_path(path):
     return path_string
 
 
-def astar(initial, goal_test,  # a function that takes a row and column and returns true if it is the goal
-          to_visit,  # a function
+def astar(start_value, is_goal,  # a function that takes a row and column and returns true if it is the goal
+          to_visit,  # locations_to_move function from maze.py, returns a list of tuples of (row, column)
+          # that are the locations that can be moved to from the current location
           heuristic  # a function, it is either manhattan_distance or euclidean_distance
           ):
     """  A* algorithm is an informed/heuristic search algorithm that uses a heuristic value to solve the maze.
@@ -81,15 +82,15 @@ def astar(initial, goal_test,  # a function that takes a row and column and retu
 
     # The priority queue is a list of tuples of (distance, row, column)
     open_list = PriorityQueue()
-    open_list.push(Node(initial, 0, heuristic()))
+    open_list.push(Node(start_value, 0, heuristic()))
     # The closed list is a list of tuples of (row, column)
-    closed_list = {initial: 0}
+    closed_list = {start_value: 0}
 
     while not open_list.empty():
         current_node = open_list.pop()
         current_state = current_node.state
         # If the current node is the goal node, then return it
-        if goal_test(current_state[0], current_state[1]):
+        if is_goal(current_state[0], current_state[1]):
             return current_node
         for child in to_visit(current_state[0], current_state[1]):
             new_cost = current_node.cost + 1
