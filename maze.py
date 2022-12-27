@@ -78,7 +78,7 @@ class Maze:
                 maze_string += cell + " "
             maze_string += Fore.CYAN + " ║\n" + Fore.RESET
             # Add the right border
-        maze_string += Fore.CYAN + "  ╚" + "═" * (self.columns * 2 + 1) + "╝\n" + Fore.RESET
+        maze_string += Fore.CYAN + "  ╚" + "═" * (self.columns * 2 + 2) + "╝\n" + Fore.RESET
         # Add the bottom border
         return maze_string
 

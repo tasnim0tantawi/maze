@@ -17,7 +17,6 @@ class Node:
     def __lt__(self, other):
         """ This is used to compare nodes in the priority queue, less than is used to compare the total cost f(n),
         where f(n) = g(n) + h(n) in A* algorithm. """
-
         return (self.cost + self.heuristic) < (other.cost + other.heuristic)
 
 
@@ -82,20 +81,30 @@ def astar(start_value, is_goal,  # a function that takes a row and column and re
 
     # The priority queue is a list of tuples of (distance, row, column)
     open_list = PriorityQueue()
+    # We are using a priority queue so we keep track of the nodes that are closest to the goal according to
+    # the heuristic
     open_list.push(Node(start_value, 0, heuristic()))
     # The closed list is a list of tuples of (row, column)
     closed_list = {start_value: 0}
 
     while not open_list.empty():
+        # The node with the lowest cost is popped from the priority queue
         current_node = open_list.pop()
+        # Current state is location is the location of the node that is popped from the priority queue
         current_state = current_node.state
         # If the current node is the goal node, then return it
         if is_goal(current_state[0], current_state[1]):
             return current_node
+        # Get the locations that can be moved to from the current location to explore them
         for child in to_visit(current_state[0], current_state[1]):
+            # Add g(n)=1 to the cost of the current node to get the cost of the child nodes
             new_cost = current_node.cost + 1
-            # If the child is not in the closed list, then add it to the open list
+            # If the child node has not been visited or the new cost is less than the cost of the child node,
+            # then add it to the open list to explore it
             if child not in closed_list or new_cost < closed_list[child]:
+                # Saving the cost of the child node in the closed list
                 closed_list[child] = new_cost
+                # Putting the child nodes in the open list to explore them
                 open_list.push(Node(child, new_cost, heuristic(), current_node))
     return None
+    # No path found, maze is unsolvable because the goal or start is blocked by multiple barriers or too many barriers
